@@ -23,6 +23,7 @@ import warnings
 warnings.filterwarnings('ignore')
 from sklearn import preprocessing
 from sklearn.svm import SVC
+import survivalPredictor
 #from sklearn.model_selection import StratifiedKFold
 from sklearn.feature_selection import RFECV
 
@@ -33,9 +34,12 @@ def get_data(feature_comb, sampling = None, feature_set = 'all'):
     Get the training data.
     '''
     
-    data_path = "/Users/azizkhan/NORBIS/survivalPredictor/data/"
-    
-    train_df = pd.read_table(data_path+'x.train.txt')
+    #data_path = "/Users/azizkhan/NORBIS/survivalPredictor/data/"
+    data_path = os.path.dirname(survivalPredictor.__file__)
+    train_df = pd.read_table(data_path+'/data/x.train.txt')
+
+    y = pd.read_table(data_path+'/data/y.train.txt')
+    y = y['Class'].values
 
     #X = train_df.values
     if feature_comb[0] == 'Top 10':
@@ -78,11 +82,7 @@ def get_data(feature_comb, sampling = None, feature_set = 'all'):
     #X = preprocessing.normalize(X, norm='l2')
     
     labels = list(train_df.columns.values)
-
-    y = pd.read_table(data_path+'y.train.txt')
-
-    y = y['Class'].values
-    
+   
     imp = Imputer(missing_values='NaN', strategy='mean', axis=0)
     imp.fit(X)
     imp.transform(X)
