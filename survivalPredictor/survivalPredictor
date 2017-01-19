@@ -27,7 +27,7 @@ import survivalPredictor
 #from sklearn.model_selection import StratifiedKFold
 from sklearn.feature_selection import RFECV
 
-__version__ = '0.1'
+__version__ = '0.2'
 
 def get_data(feature_comb, sampling = None, feature_set = 'all'):
     '''
