@@ -29,19 +29,12 @@ from sklearn.feature_selection import RFECV
 
 __version__ = '0.2'
 
-def get_data(feature_comb, sampling = None, feature_set = 'all'):
-    '''
-    Get the training data.
-    '''
-    
-    #data_path = "/Users/azizkhan/NORBIS/survivalPredictor/data/"
-    data_path = os.path.dirname(survivalPredictor.__file__)
-    train_df = pd.read_table(data_path+'/data/x.train.txt')
 
-    y = pd.read_table(data_path+'/data/y.train.txt')
-    y = y['Class'].values
-
-    #X = train_df.values
+data_path = "/Users/azizkhan/NORBIS/survivalPredictor/survivalPredictor"
+#data_path = os.path.dirname(survivalPredictor.__file__)
+   
+def feature_combinations(train_df, feature_comb):
+     #X = train_df.values
     if feature_comb[0] == 'Top 10':
         X = train_df.iloc[:,[1400,15905,6836,4387,14160,3674,15120,2442,7860,1986]]
 
@@ -71,6 +64,19 @@ def get_data(feature_comb, sampling = None, feature_set = 'all'):
     else:
         X = train_df.iloc[:,[1400,15905,6836,4387,14160,3674,15120,2442,7860,1986,16,503,3392,6018,5366,15599,1294,16412,11877,636,12564,5023,6237,9097,1668,15060,3066,10345,16728,14200,4126,12955,14412,7604,15078,8220,12958,9131,10677,7688,9164,1518,1410,12051,3304,10589,17543,13633,189,1305,16209,16959,8006,9540,11882,926,12277,3287,15082,10286,1089,4206,13340,17582,7231,6315,11315,497,3318,1911,1387,7697,11363,14560,11539,17706,5594,14648,8804,11558,8476,6934,9466,2191,6720,6722,6096,16185,7297,8498,10489,11652,17586,9069,2734,16953,14815,7016,14323,755,1466,1804,4797,9077,16063,17536,11242,10959,12073,15699,11843,3944,12675,16299,7040,16907,15304,7091,11057,8507,16466,13655,6940,10512,16086,13361,3893,11639,9436,1563,3757,14061,9769,8065,12725,10359,16613,13955,50,9431,15897,8894,2656,157,9454,1453,2058,7268,12311,2936,13527,1642,9139,15713,16917,1440,15129,4663,13738,4337,10498,4648,14818,11084,960,11586,5407,1904,10381,7797,12043,750,7587,16302,3668,1519,11990,3924,14874,10125,16864,11259,14036,11905,14238,53,16087,14614]]
 
+    return X
+
+def get_data(feature_comb, sampling = None, feature_set = 'all'):
+    '''
+    Get the training data.
+    '''
+    
+    train_df = pd.read_table(data_path+'/data/x.train.txt')
+
+    y = pd.read_table(data_path+'/data/y.train.txt')
+    y = y['Class'].values
+
+    X = feature_combinations(train_df, feature_comb)
 
     print X.shape
 
@@ -503,17 +509,34 @@ def make_prediction(X, y, feature_list, input_file, names, classifiers, output_d
     '''
     Make prediction on the test data
     '''
-    test_df = pd.read_csv(input_file)
+
+    if not input_file:
+        test_df = pd.read_table(data_path+'/data/test_data.txt')
+    else:
+        test_df = pd.read_table(input_file)
+
+    test_df = feature_combinations(test_df, feature_list)
+
+    labels = list(test_df.columns.values)
+
+
+    test_X = test_df.values
+
+    print (test_X.shape)
     
     imp = Imputer(missing_values='NaN', strategy='mean', axis=0)
-    
-    test_X = test_df[feature_list].values
     
     imp.fit(test_X)
     imp.transform(test_X)
 
-    feature_list.append("Class")
-    feature_list.append("Probability")
+    test_X = preprocessing.scale(test_X)
+
+    labels.append("Probability")
+    labels.append("Class")
+    test_df["Probability"] = 0
+    test_df["Class"] = 0
+    
+    #test_df["Probability"] = '0'
 
     for name, clf in zip(names, classifiers):
         
@@ -523,6 +546,8 @@ def make_prediction(X, y, feature_list, input_file, names, classifiers, output_d
 
         pred_prob = clf.predict_proba(test_X)
 
+        print(pred_prob)
+
         #print predictions
         test_df["Probability"] = pd.Series(pred_prob[:,1])
     
@@ -530,9 +555,11 @@ def make_prediction(X, y, feature_list, input_file, names, classifiers, output_d
         pred_class[pred_prob[:,1] >= prob ] = 1
         pred_class[pred_prob[:,1] < prob ] = 0
 
+        print(pd.Series(pred_class))
+
         test_df["Class"] = pd.Series(pred_class)
 
-        test_df.to_csv(output_dir+"/survivalPredictor_"+name+"_predictions.csv", cols=feature_list, index=False)
+        test_df.to_csv(output_dir+"/survivalPredictor_"+name+"_predictions.csv", columns=labels, index=False)
 
 def main():
     '''
