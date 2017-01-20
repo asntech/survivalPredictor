@@ -101,7 +101,7 @@ By default all models use 3-fold cross-validation. If you want to set different 
 
 Make predictions
 ------------------
-To make predictions should have computed available features and saved a tab-delimeted file. Next, you need to tell the model the features you have to make prediction with using ``--feature`` and also provide the Tab delimetd file to ``--input`` and next type ``--pred`` to make predictions::
+To make predictions should have computed available features and saved a tab-delimited file. Next, you need to tell the model the features you have to make prediction with using ``--feature`` and also provide the Tab delimetd file to ``--input`` and next type ``--pred`` to make predictions::
 
 	survivalPredictor --model rf --feature "Top 200" --input ~/path/to/test/file.txt --pred
 
