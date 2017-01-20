@@ -101,9 +101,9 @@ By default all models use 3-fold cross-validation. If you want to set different 
 
 Make predictions
 ------------------
-To make predictions should have computed available features and saved a CSV file. Next, you need to tell the model the features you have to make prediction with using ``--feature`` and also provide the Tab delimetd file to ``--input`` and next type ``--pred`` to make predictions::
+To make predictions should have computed available features and saved a tab-delimeted file. Next, you need to tell the model the features you have to make prediction with using ``--feature`` and also provide the Tab delimetd file to ``--input`` and next type ``--pred`` to make predictions::
 
-	survivalPredictor --model rf --feature "Top 200" --input ~/path/to/CSV/file.txt --pred
+	survivalPredictor --model rf --feature "Top 200" --input ~/path/to/test/file.txt --pred
 
 This will save the predictions results as CSV file ``survivalPredictor_[MODEL_NAME]_predictions.csv``. In the CSV file the field Class is 1=alive and 0=dead. We also report  probability score for each prediction to tell the user how good and bad a prediction is. This will help to decide which candidates to select for further analysis.
 
