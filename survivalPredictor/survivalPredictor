@@ -80,11 +80,10 @@ def get_data(feature_comb, sampling = None, feature_set = 'all'):
     print X.shape
 
     X = X.values
-
-    #X = preprocessing.scale(X)
-
+    
     #Normalize
-    X = preprocessing.normalize(X, norm='l2')
+    #X = preprocessing.normalize(X, norm='l2')
+    X = preprocessing.scale(X)
     
     labels = list(train_df.columns.values)
    
