@@ -1,7 +1,13 @@
-These results are generated using survivalPredictor version 1.0 on 2017-01-20 10:41:57.697032
+These results are generated using survivalPredictor version 1.0 on 2017-01-20 11:54:54.765824
 Read more about survivalPredictor at https://github.com/asntech/survivalPredictor
 
 
 Comparing models with 3-fold cross-validation
 Model	Precision	Recall	F1-score	AUC	PRC
-Random Forest	0.72	0.52	0.6	0.8	0.72
+Random Forest	0.68	0.57	0.62	0.75	0.73
+Linear SVM	0.7	0.58	0.63	0.78	0.75
+AdaBoost	0.67	0.62	0.65	0.78	0.75
+K-Nearest Neighbors	0.69	0.46	0.55	0.67	0.64
+Naive Bayes	0.73	0.66	0.69	0.84	0.8
+Decision Tree	0.59	0.56	0.58	0.58	0.6
+Logistic Regression	0.7	0.56	0.62	0.78	0.73

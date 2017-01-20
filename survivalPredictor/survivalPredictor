@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 survivalPredictor - Survival prediction uing gene expression data 
-Version: 1.0
+Version: 0.3
 @author: Aziz Khan
 """
 import sys
@@ -26,7 +26,7 @@ import survivalPredictor
 #from sklearn.model_selection import StratifiedKFold
 from sklearn.feature_selection import RFECV
 
-__version__ = '0.2'
+__version__ = '0.3'
 
 
 #data_path = "/Users/azizkhan/NORBIS/survivalPredictor/survivalPredictor"
@@ -173,16 +173,19 @@ def get_model(model, options):
         from sklearn.naive_bayes import GaussianNB
         from sklearn.neighbors import KNeighborsClassifier
         from sklearn.tree import DecisionTreeClassifier
-        from sklearn.svm import SVC    
+        from sklearn.svm import SVC
+        from sklearn.linear_model import LogisticRegression, Lasso
+    
         
-        names = ["Random Forest", "Linear SVM", "AdaBoost", "K-Nearest Neighbors", "Naive Bayes", "Decision Tree"]
+        names = ["Random Forest", "Linear SVM", "AdaBoost", "K-Nearest Neighbors", "Naive Bayes", "Decision Tree", "Logistic Regression"]
         classifiers = [
         RandomForestClassifier(max_depth=max_depth,n_estimators=int(options.estimator)),
         SVC(kernel='linear', probability=True),  
         AdaBoostClassifier(),
         KNeighborsClassifier(4),
         GaussianNB(),
-        DecisionTreeClassifier(max_depth=3)]
+        DecisionTreeClassifier(max_depth=3),
+        LogisticRegression()]
     else:
         from sklearn.ensemble import RandomForestClassifier
         names = ["Random Forest"]
