@@ -176,7 +176,6 @@ def get_model(model, options):
         from sklearn.svm import SVC
         from sklearn.linear_model import LogisticRegression, Lasso
     
-        
         names = ["Random Forest", "Linear SVM", "AdaBoost", "K-Nearest Neighbors", "Naive Bayes", "Decision Tree", "Logistic Regression"]
         classifiers = [
         RandomForestClassifier(max_depth=max_depth,n_estimators=int(options.estimator)),
@@ -227,9 +226,6 @@ def claf_roc(X,y, Clabel, classifier, count, feature_comb, options, test_set=Non
         test_yy = test_df["Class"].values
 
         test_y = np.zeros(len(test_X))
-        test_y[test_yy == 'SE'] = 1
-        test_y[test_yy == 'TE'] = 0
-
         
         print "Testing the model using feature set "+Clabel
         probas_ = classifier.fit(X, y).predict_proba(test_X)
