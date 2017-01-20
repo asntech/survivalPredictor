@@ -59,8 +59,9 @@ to find the available commands and required parameters to run survivalPredictor.
 
 survivalPredictor demo
 ----------------------
+``Note: The data used here is gene expression data of glioblastoma patients from the NORBIS prediction course 2017. If you want to use your own data, you need to modify the code, as the top features sets are hard coded. ``
 
-To run a demo using Random Forest model and validate it using 10-fold cross-validation, you can type::
+To run a demo using Random Forest model and validate it using 5-fold cross-validation, you can type::
 
 	survivalPredictor --demo
 

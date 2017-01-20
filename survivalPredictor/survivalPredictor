@@ -26,8 +26,7 @@ import survivalPredictor
 #from sklearn.model_selection import StratifiedKFold
 from sklearn.feature_selection import RFECV
 
-__version__ = '0.3'
-
+__version__ = '0.4'
 
 #data_path = "/Users/azizkhan/NORBIS/survivalPredictor/survivalPredictor"
 data_path = os.path.dirname(survivalPredictor.__file__)
