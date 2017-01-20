@@ -83,6 +83,8 @@ celerybeat-schedule
 venv/
 ENV/
 
+survivalPredictor_results/
+
 # Spyder project settings
 .spyderproject
 

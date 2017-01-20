@@ -1,12 +1,7 @@
-These results are generated using Improse version 1.0 on 2017-01-19 00:52:18.850507
-Read more about survivalPredictor at https://github.com/asntech/improse
+These results are generated using survivalPredictor version 1.0 on 2017-01-20 10:41:57.697032
+Read more about survivalPredictor at https://github.com/asntech/survivalPredictor
 
 
 Comparing models with 3-fold cross-validation
 Model	Precision	Recall	F1-score	AUC	PRC
-Random Forest	0.68	0.46	0.55	0.75	0.67
-Linear SVM	0.67	0.61	0.64	0.79	0.75
-AdaBoost	0.69	0.6	0.64	0.79	0.76
-K-Nearest Neighbors	0.71	0.58	0.64	0.77	0.78
-Naive Bayes	0.73	0.63	0.68	0.84	0.8
-Decision Tree	0.67	0.49	0.57	0.63	0.65
+Random Forest	0.72	0.52	0.6	0.8	0.72

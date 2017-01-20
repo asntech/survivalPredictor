@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 """
 survivalPredictor - Survival prediction uing gene expression data 
-Created on Sun Oct 05 18:33:53 2014
 Version: 1.0
 @author: Aziz Khan
 """
@@ -30,8 +29,8 @@ from sklearn.feature_selection import RFECV
 __version__ = '0.2'
 
 
-data_path = "/Users/azizkhan/NORBIS/survivalPredictor/survivalPredictor"
-#data_path = os.path.dirname(survivalPredictor.__file__)
+#data_path = "/Users/azizkhan/NORBIS/survivalPredictor/survivalPredictor"
+data_path = os.path.dirname(survivalPredictor.__file__)
    
 def feature_combinations(train_df, feature_comb):
      #X = train_df.values
@@ -82,10 +81,10 @@ def get_data(feature_comb, sampling = None, feature_set = 'all'):
 
     X = X.values
 
-    X = preprocessing.scale(X)
+    #X = preprocessing.scale(X)
 
     #Normalize
-    #X = preprocessing.normalize(X, norm='l2')
+    X = preprocessing.normalize(X, norm='l2')
     
     labels = list(train_df.columns.values)
    
@@ -533,20 +532,23 @@ def make_prediction(X, y, feature_list, input_file, names, classifiers, output_d
 
     labels.append("Probability")
     labels.append("Class")
+    
     test_df["Probability"] = 0
     test_df["Class"] = 0
     
     #test_df["Probability"] = '0'
 
     for name, clf in zip(names, classifiers):
+        file_name = output_dir+"/survivalPredictor_"+name+"_predictions.txt"
+        file_ob = open(file_name,'w')
         
         print "Training and predicting usind "+name+"..."
         
         clf = clf.fit(X,y)
 
         pred_prob = clf.predict_proba(test_X)
-
-        print(pred_prob)
+        file_ob.write("Probability\n")
+        file_ob.write(str(pd.Series(pred_prob[:,1])))
 
         #print predictions
         test_df["Probability"] = pd.Series(pred_prob[:,1])
@@ -555,9 +557,14 @@ def make_prediction(X, y, feature_list, input_file, names, classifiers, output_d
         pred_class[pred_prob[:,1] >= prob ] = 1
         pred_class[pred_prob[:,1] < prob ] = 0
 
-        print(pd.Series(pred_class))
+        #print(pd.Series(pred_class))
+
+        file_ob.write("Class\n")
+        file_ob.write(str(pd.Series(pred_class)))
 
         test_df["Class"] = pd.Series(pred_class)
+
+        file_ob.close()
 
         test_df.to_csv(output_dir+"/survivalPredictor_"+name+"_predictions.csv", columns=labels, index=False)
 
