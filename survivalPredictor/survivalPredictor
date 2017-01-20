@@ -160,13 +160,19 @@ def get_model(model, options):
         classifiers = [
         DecisionTreeClassifier(max_depth=3)   
         ]
+    elif model=='lr':
+        from sklearn.linear import LogisticRegression
+        names = ["Logistic Regression"]
+        classifiers = [
+        LogisticRegression()   
+        ]
     elif model=='nb':
         from sklearn.naive_bayes import GaussianNB
         names = ["Naive Bayes"]
         classifiers = [
          GaussianNB()   
         ]
-    
+
     elif model == 'all':
         
         from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
@@ -585,7 +591,7 @@ def main():
     parser.add_option("--demo", dest="demo", action='store_true',
                     help = "Run Demo using Random Forest 5-fold cross-validation. \nYou can set --model all, if you want to run the test on all six models. Note: This will take few minutes.")
     parser.add_option("-m","--model", dest="model", nargs = 1, type=str, default="rf",
-                    help = "Select model. [rf, svm, knn, ab, dt, bn, all] (default=rf)")
+                    help = "Select model. [rf, svm, knn, ab, dt, bn, lr, all] (default=rf)")
 
     parser.add_option("-f","--feature", dest="feature", nargs = 1,  type=str, default=None,
                     help = "Select features of features type to train the model and make predictions. Feature names should be comma separated. \nIf you are want to check the combinatorial predictive power of features, separate them using + sypbol.\n[H3K27ac,Brd4 or Chromatin,TFs etc ]. (Default=all)")

@@ -3,7 +3,7 @@
 """
 This is a setup script for survivalPredictor
 
-@version: 0.3
+@version: 0.4
 @author: Aziz Khan
 @email: aziz.khan@ncmm.uio.no
 """
@@ -11,7 +11,7 @@ import os
 from distutils.core import setup
 from setuptools import find_packages
 
-VERSION = '0.3'
+VERSION = '0.4'
 
 CLASSIFIERS = [
     'Intended Audience :: Developers',
